@@ -25,6 +25,37 @@ Un archivo especial que permite que dos programas se comuniquen entre sí dentro
 ### 🔒 **Chroot**
 Una "jaula de seguridad" que aísla a Postfix. Si alguien lo hackea, no puede acceder al resto del sistema.
 
+### 👤 **Usuario erjoay**
+Es **nuestro usuario** en el servidor. Con este usuario ejecutaremos todos los comandos y configuraremos el sistema. Representa el nodo/servidor en nuestro laboratorio.
+
+### 🎯 **EICAR - El Archivo de Prueba Antivirus**
+
+> ⚡ **¿QUÉ ES EICAR?**
+>
+> **EICAR** = *European Institute for Computer Antivirus Research*
+>
+> Es una **cadena de texto inofensiva** estandarizada mundialmente que **TODOS los antivirus reconocen automáticamente como un "virus de prueba"**. 
+>
+> **NO es un virus real**, pero se comporta como tal para que el antivirus lo detecte.
+>
+> **La cadena mágica:**
+> ```
+> X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*
+> ```
+>
+> **¿Para qué sirve?**
+> - ✅ Verificar que el antivirus funciona correctamente
+> - ✅ Auditar sistemas de seguridad sin riesgos reales
+> - ✅ Validar que el filtro de emails está activo
+> - ✅ Demostrar cómo el sistema rechaza amenazas
+>
+> **¿Por qué es seguro?**
+> - 🔐 No contiene código malicioso real
+> - 🔐 Los antivirus saben que es un test
+> - 🔐 Es legal usarlo para pruebas
+> - 🔐 Se distribuye libremente en la industria
+
+
 ---
 
 ## 🛠️ Componentes Principales
