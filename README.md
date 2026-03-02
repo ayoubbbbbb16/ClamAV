@@ -74,7 +74,8 @@ Es **nuestro usuario** en el servidor. Con este usuario ejecutaremos todos los c
 
 ### 1️⃣ Configurar IP Estática
 
-**¿Por qué?** Los servidores de correo necesitan una dirección IP fija. Si cambia, otros servidores no confían en tus correos (piensan que es spam).
+**¿Por qué?** 
+Los servidores de correo necesitan una dirección IP fija. Si cambia, otros servidores no confían en tus correos (piensan que es spam).
 
 **Archivo:** `/etc/netplan/00-installer-config.yaml`
 ```yaml
@@ -102,7 +103,8 @@ network:
 
 ### 2️⃣ Instalar Software
 
-**¿Qué hace?** Descarga e instala todos los programas necesarios de forma automática.
+**¿Qué hace?** 
+Descarga e instala todos los programas necesarios de forma automática.
 ```bash
 export DEBIAN_FRONTEND=noninteractive
 sudo debconf-set-selections <<< "postfix postfix/mailname string erjoay.local"
@@ -126,7 +128,8 @@ sudo apt install -y postfix clamav-daemon clamav-milter mailutils telnet
 
 ### 3️⃣ Crear Socket de Comunicación
 
-**¿Qué hace?** Crea una carpeta especial donde Postfix y ClamAV pueden comunicarse sin salir de la jaula de seguridad.
+**¿Qué hace?** 
+Crea una carpeta especial donde Postfix y ClamAV pueden comunicarse sin salir de la jaula de seguridad.
 ```bash
 sudo mkdir -p /var/spool/postfix/clamav
 sudo chown clamav:postfix /var/spool/postfix/clamav
@@ -145,7 +148,8 @@ sudo chmod 755 /var/spool/postfix/clamav
 
 ### 4️⃣ Configurar ClamAV-Milter
 
-**¿Qué hace?** Configuramos qué debe hacer ClamAV cuando encuentra un virus.
+**¿Qué hace?** 
+Configuramos qué debe hacer ClamAV cuando encuentra un virus.
 
 **Archivo:** `/etc/clamav/clamav-milter.conf`
 ```bash
@@ -166,7 +170,8 @@ OnInfected Reject
 
 ### 5️⃣ Conectar Postfix con ClamAV
 
-**¿Qué hace?** Le ordena a Postfix que ANTES de aceptar un correo, lo escanee con ClamAV.
+**¿Qué hace?** 
+Le ordena a Postfix que ANTES de aceptar un correo, lo escanee con ClamAV.
 ```bash
 sudo postconf -e "smtpd_milters = unix:clamav/clamav-milter.ctl"
 sudo postconf -e "non_smtpd_milters = unix:clamav/clamav-milter.ctl"
@@ -188,7 +193,8 @@ sudo postconf -e "milter_default_action = tempfail"
 
 ### 6️⃣ Permisos de Seguridad
 
-**¿Qué hace?** Permite que el usuario `postfix` acceda al grupo `clamav` sin romper la jaula de seguridad.
+**¿Qué hace?** 
+Permite que el usuario `postfix` acceda al grupo `clamav` sin romper la jaula de seguridad.
 ```bash
 sudo usermod -a -G clamav postfix
 ```
@@ -206,7 +212,8 @@ sudo usermod -a -G clamav postfix
 
 ### 7️⃣ Iniciar Servicios
 
-**¿Qué hace?** Reinicia los tres servicios para aplicar todos los cambios y cargar las firmas de virus.
+**¿Qué hace?** 
+Reinicia los tres servicios para aplicar todos los cambios y cargar las firmas de virus.
 ```bash
 sudo systemctl restart clamav-daemon clamav-milter postfix
 ```
@@ -223,7 +230,8 @@ sudo systemctl restart clamav-daemon clamav-milter postfix
 
 ### 8️⃣ Verificar que Todo Funciona
 
-**¿Qué hace?** Comprueba que los servicios estén activos y el socket esté creado correctamente.
+**¿Qué hace?** 
+Comprueba que los servicios estén activos y el socket esté creado correctamente.
 ```bash
 # ✅ Ver si el socket existe
 ls -l /var/spool/postfix/clamav/clamav-milter.ctl
@@ -244,9 +252,10 @@ sudo journalctl -u clamav-daemon -n 20
 
 ---
 
-### 9️⃣ Prueba de Fuego 🔥
+### 9️⃣ Prueba 🔥
 
-**¿Qué hace?** Envía un archivo de prueba EICAR (estandarizado por la industria antivirus) para validar que el sistema detecta virus correctamente.
+**¿Qué hace?** 
+Envía un archivo de prueba EICAR (estandarizado por la industria antivirus) para validar que el sistema detecta virus correctamente.
 ```bash
 (
 echo "HELO erjoay.local"
